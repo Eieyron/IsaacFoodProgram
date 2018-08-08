@@ -1,4 +1,4 @@
-// Farmer.js
+// Ingredient.js
 
 var mysql = require('../mysql');
 
