@@ -6,7 +6,7 @@ var Ingredient = {
     viewAllIngredients: function(callback){
         return mysql.query('call viewAllIngredients();', callback);
     },
-    viewIngredientID: function(id, callback){
+    viewIngredientByID: function(id, callback){
         return mysql.query('call viewIngredientByID(?);',[id], callback);
     },
     addIngredient: function(ingredient, callback){

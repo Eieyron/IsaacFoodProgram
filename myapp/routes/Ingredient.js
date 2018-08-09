@@ -6,7 +6,7 @@ var ingredient = require('../models/Ingredient');
 
 router.get('/:id?', (req, res, next)=>{
     if(req.params.id) {
-        ingredient.getIngredientByID(req.params.id, (err, rows)=>{
+        ingredient.viewIngredientByID(req.params.id, (err, rows)=>{
             if(err){
                 res.json(err);
             }else{
@@ -14,7 +14,7 @@ router.get('/:id?', (req, res, next)=>{
             }
         });
     }else{
-        ingredient.getAllIngredients((err, rows)=>{
+        ingredient.viewAllIngredients((err, rows)=>{
             if(err){
                 res.json(err);
             }else{
@@ -23,3 +23,5 @@ router.get('/:id?', (req, res, next)=>{
         });
     }
 });
+
+module.exports = router;
