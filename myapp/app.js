@@ -3,11 +3,12 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var app = express();
 
+// manage routes
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-
-var app = express();
+var ingredient = require('./routes/Ingredient');
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -36,6 +37,21 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+const http = require('http');
+
+const hostname = '127.0.0.1';
+const port = 3001;
+
+const server = http.createServer((req, res) => {
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'text/plain');
+  res.end('Hello World\n');
+});
+
+server.listen(port, hostname, () => {
+  console.log(`Server running at http://${hostname}:${port}/`);
 });
 
 module.exports = app;
