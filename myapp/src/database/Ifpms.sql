@@ -115,6 +115,6 @@ delimiter ;
 call addMeal( 'adobo', 'meat', 'dinner', 'do everything');
 call addMeal( 'tuna cabbage', 'vegetable', 'breakfast', 'do everything');
 call addMeal( 'pininyahang manok', 'meat', 'dinner', 'do everything');
-call addMeal( 'hotdog + egg', 'meat', 'breakfast', 'do everything');
+call addMeal( 'hotdog + egg', 'meat', 'breakfast', 'do this');
 
 /*** End of MEAL RELATED CODE ***/
