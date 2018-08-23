@@ -150,3 +150,46 @@ call addMeal( 'pininyahang manok', 'meat', 'dinner', 'do everything');
 call addMeal( 'hotdog + egg', 'meat', 'breakfast', 'do this');
 
 /*** End of MEAL RELATED CODE ***/
+
+/*** Start of MealIngredient Connector Table ***/
+
+create table MEALINGREDIENT (
+    meal_ingredient_id int auto_increment,
+    meal_id int, -- the meal where this ingredient belongs to
+    ingredient_id int, -- the ingredient id of this connector
+    ingredient_amount int,
+    ingredient_total_cost int,
+    Primary key(meal_ingredient_id),
+    FOREIGN key(meal_id) references meal(meal_id),
+    FOREIGN key(ingredient_id) references Ingredient(ingredient_id)
+);
+
+-- procedures for MealIngredient
+
+drop procedure if exists viewAllMealIngredients;
+drop procedure if exists addMealIngredient;
+
+delimiter //
+
+    create procedure viewAllMealIngredients( meal_id_view int )
+        BEGIN 
+            select ingredient.ingredient_id, ingredient_name, ingredient_type, ingredient_amount, ingredient_total_cost, unit from Ingredient inner join mealingredient on ingredient.ingredient_id = mealingredient.ingredient_id where mealingredient.meal_id = meal_id_view;
+        end;
+    //
+
+    create procedure addMealIngredient( meal_id int,
+                                        ingredient_id_insert int,
+                                        ingredient_amount int )
+        BEGIN
+            insert into mealingredient values (null, meal_id, ingredient_id_insert, ingredient_amount, (select cost from ingredient where ingredient_id = ingredient_id_insert) * ingredient_amount);
+        end;
+    //
+
+delimiter ;
+
+-- create default mealingredient instances
+
+call addMealIngredient(1,1,1);
+call addMealIngredient(1,2,1);
+
+/*** End of MealIngredient Connector Table ***/

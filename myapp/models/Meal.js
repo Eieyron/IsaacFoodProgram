@@ -17,6 +17,12 @@ var Meal = {
     },
     updateMealByID: function(id, meal, callback){
         return mysql.query('call updateMealByID(?,?,?,?,?);', [id, meal.name, meal.type, meal.time, meal.recipe], callback);
+    },
+    viewAllMealIngredients: function(id, callback){
+        return mysql.query('call viewAllMealIngredients(?)', [id], callback);
+    },
+    addMealIngredient: function(id, ingredient_connection, callback){
+        return mysql.query('call addMealIngredient(?,?,?)', [id, ingredient_connection.id, ingredient_connection.amount], callback);
     }
 }
 
