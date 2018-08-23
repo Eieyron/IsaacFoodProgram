@@ -1,13 +1,13 @@
-// Ingredient.js
+// Meal.js
 
 var express = require('express');
 var router = express.Router();
-var ingredient = require('../models/Ingredient');
+var meal = require('../models/Meal');
 
 router.get('/view/:id?', (req, res, next)=>{
 
     if(req.params.id) {
-        ingredient.viewIngredientByID(req.params.id, (err, rows)=>{
+        meal.viewMealByID(req.params.id, (err, rows)=>{
             if(err){
                 res.json(err);
             }else{
@@ -15,7 +15,7 @@ router.get('/view/:id?', (req, res, next)=>{
             }
         });
     }else{
-        ingredient.viewAllIngredients((err, rows)=>{
+        meal.viewAllMeals((err, rows)=>{
             if(err){
                 res.json(err);
             }else{
@@ -25,18 +25,18 @@ router.get('/view/:id?', (req, res, next)=>{
     }
 });
 
-router.post('/add/:name/:type/:cost/:unit', (req, res, next)=>{
+router.post('/add/:name/:type/:time/:recipe', (req, res, next)=>{
 
-    ingredient.addIngredient(req.params, (err, rows)=>{
+    meal.addMeal(req.params, (err, rows)=>{
         if(err)res.json(err);
         else res.json(rows);
     });
 
 });
 
-router.post('/update/:id/:name/:type/:cost/:unit', (req, res, next)=>{
+router.post('/update/:id/:name/:type/:time/:recipe', (req, res, next)=>{
 
-    ingredient.updateIngredientByID(req.params.id, req.params, (err, rows)=>{
+    meal.updateMealByID(req.params.id, req.params, (err, rows)=>{
         if(err)res.json(err);
         else res.json(rows);
     })
@@ -45,7 +45,7 @@ router.post('/update/:id/:name/:type/:cost/:unit', (req, res, next)=>{
 
 router.delete('/delete/:id', (req,res,next)=>{
 
-    ingredient.deleteIngredientByID(req.params.id, (err, rows)=>{
+    meal.deleteMealByID(req.params.id, (err, rows)=>{
         if(err)res.json(err);
         else res.json(rows);
     });

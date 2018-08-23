@@ -22,6 +22,7 @@ drop procedure if exists viewAllIngredients;
 drop procedure if exists viewIngredientByID;
 drop procedure if exists addIngredient;
 drop procedure if exists deleteIngredientByID;
+drop procedure if exists updateIngredientByID;
 
 delimiter //
 
@@ -51,6 +52,21 @@ delimiter //
             DELETE from Ingredient where ingredient_id = ing_id;
         end;
     //
+
+    create procedure updateIngredientByID( ing_id int,
+                                           name varchar(45),
+                                           type varchar(45),
+                                           cost_u int,
+                                           unit_u varchar(45))
+        BEGIN
+            update Ingredient
+                set ingredient_name = name,
+                    ingredient_type = type,
+                    cost = cost_u,
+                    unit = unit_u
+            where ingredient_id = ing_id;
+        end;
+    //
         
 delimiter ;
 
@@ -78,6 +94,7 @@ drop procedure if exists viewAllMeals;
 drop procedure if exists viewMealByID;
 drop procedure if exists addMeal;
 drop procedure if exists deleteMealByID;
+drop procedure if exists updateMealByID;
 
 delimiter //
 
@@ -105,6 +122,21 @@ delimiter //
     create procedure deleteMealByID( meal_id_delete int )
         BEGIN  
             delete from meal where meal_id = meal_id_delete;
+        end;
+    //
+
+    create procedure updateMealByID( meal_id_u int,
+                                     name_u varchar(45),
+                                     type_u varchar(45),
+                                     time_u varchar(45),
+                                     recipe_u varchar(255))
+        BEGIN  
+            update Meal
+                set meal_name = name_u,
+                    meal_type = type_u,
+                    meal_time = time_u,
+                    recipe = recipe_u
+            where meal_id = meal_id_u;
         end;
     //
 
