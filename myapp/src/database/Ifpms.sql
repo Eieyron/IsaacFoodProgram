@@ -11,7 +11,7 @@ create table Ingredient(
     ingredient_id int AUTO_INCREMENT,
     ingredient_name varchar(45),
     ingredient_type varchar(45),
-    cost int not null,
+    cost float not null,
     unit varchar(45),
     PRIMARY KEY(ingredient_id)
 );
@@ -40,7 +40,7 @@ delimiter //
 
     create procedure addIngredient( name varchar(45), 
                                     type varchar(45), 
-                                    cost int,
+                                    cost float,
                                     unit varchar(45))
         BEGIN  
             insert into Ingredient values(null, name, type, cost, unit);
@@ -56,7 +56,7 @@ delimiter //
     create procedure updateIngredientByID( ing_id int,
                                            name varchar(45),
                                            type varchar(45),
-                                           cost_u int,
+                                           cost_u float,
                                            unit_u varchar(45))
         BEGIN
             update Ingredient
@@ -158,7 +158,7 @@ create table MEALINGREDIENT (
     meal_id int, -- the meal where this ingredient belongs to
     ingredient_id int, -- the ingredient id of this connector
     ingredient_amount int,
-    ingredient_total_cost int,
+    ingredient_total_cost float,
     Primary key(meal_ingredient_id),
     FOREIGN key(meal_id) references meal(meal_id),
     FOREIGN key(ingredient_id) references Ingredient(ingredient_id)
@@ -168,6 +168,7 @@ create table MEALINGREDIENT (
 
 drop procedure if exists viewAllMealIngredients;
 drop procedure if exists addMealIngredient;
+drop procedure if exists deleteMealIngredient;
 
 delimiter //
 
@@ -185,6 +186,24 @@ delimiter //
         end;
     //
 
+    create procedure deleteMealIngredient(meal_id_del int,
+                                          ingredient_id_del int)
+        BEGIN   
+            delete from MealIngredient where meal_id = meal_id_del  and ingredient_id = ingredient_id_del;
+        end;
+    //
+
+    create procedure updateIngredientAmount( meal_id_u int,
+                                             ingredient_id_u int,
+                                             ingredient_amount_u int)
+        BEGIN
+            update MealIngredient
+                set ingredient_amount = ingredient_amount_u,
+                    ingredient_total_cost = ingredient_amount_u * (select cost from Ingredient where ingredient_id = ingredient_id_u)
+            where meal_id = meal_id_u and ingredient_id = ingredient_id_u;
+        end;
+    //
+
 delimiter ;
 
 -- create default mealingredient instances
@@ -194,6 +213,5 @@ call addMealIngredient(1,2,1);
 call addMealIngredient(2,2,3);
 call addMealIngredient(3,1,1);
 call addMealIngredient(2,1,2);
-call viewAllMealIngredients(2);
 
 /*** End of MealIngredient Connector Table ***/

@@ -25,13 +25,6 @@ router.get('/view/:id?', (req, res, next)=>{
     }
 });
 
-router.get('/mealingredient/view/:id?', (req, res, next)=>{
-    meal.viewAllMealIngredients(req.params.id, (err, rows)=>{
-        if(err) res.json(err);
-        else res.json(rows);
-    });
-});
-
 router.post('/add/:name/:type/:time/:recipe', (req, res, next)=>{
 
     meal.addMeal(req.params, (err, rows)=>{
@@ -49,12 +42,7 @@ router.post('/update/:id/:name/:type/:time/:recipe', (req, res, next)=>{
     });
 });
 
-router.post('/mealingredient/add/:meal_id/:id/:amount', (req,res,next)=>{
-    meal.addMealIngredient(req.params.meal_id, req.params, (err,rows)=>{
-        if(err)res.json(err);
-        else res.json(rows);
-    })
-})
+
 
 router.delete('/delete/:id', (req,res,next)=>{
 
@@ -63,6 +51,34 @@ router.delete('/delete/:id', (req,res,next)=>{
         else res.json(rows);
     });
 
+});
+
+router.get('/mealingredient/view/:id?', (req, res, next)=>{
+    meal.viewAllMealIngredients(req.params.id, (err, rows)=>{
+        if(err) res.json(err);
+        else res.json(rows);
+    });
+});
+
+router.post('/mealingredient/add/:meal_id/:id/:amount', (req,res,next)=>{
+    meal.addMealIngredient(req.params.meal_id, req.params, (err,rows)=>{
+        if(err)res.json(err);
+        else res.json(rows);
+    });
+});
+
+router.delete('/mealingredient/delete/:meal_id/:id', (req,res,next)=>{
+    meal.deleteMealIngredient(req.params.meal_id, req.params.id, (err, rows)=>{
+        if(err)res.json(err);
+        else res.json(rows);
+    });
+});
+
+router.post('/mealingredient/update/:meal_id/:id/:amount',(req,res,next)=>{
+    meal.updateMealIngredient(req.params.meal_id, req.params, (err, rows)=>{
+        if(err)res.json(err);
+        else res.json(rows);
+    });
 });
 
 module.exports = router;
