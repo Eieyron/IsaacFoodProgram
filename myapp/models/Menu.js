@@ -36,6 +36,6 @@ var Menu = {
     updateIngredientAmount: function(id, ingredient_connection, callback){
         return mysql.query('call updateIngredientAmount(?,?,?)', [id, ingredient_connection.id, ingredient_connection.amount], callback);
     }
-}
+};
 
 module.exports = Meal;
