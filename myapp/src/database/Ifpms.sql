@@ -154,14 +154,12 @@ call addMeal( 'hotdog + egg', 'meat', 'breakfast', 'do this');
 /*** Start of MealIngredient Connector Table ***/
 
 create table MEALINGREDIENT (
-    meal_ingredient_id int auto_increment,
     meal_id int, -- the meal where this ingredient belongs to
     ingredient_id int, -- the ingredient id of this connector
     ingredient_amount int,
     ingredient_total_cost float,
-    Primary key(meal_ingredient_id),
-    FOREIGN key(meal_id) references meal(meal_id),
-    FOREIGN key(ingredient_id) references Ingredient(ingredient_id)
+    FOREIGN key(meal_id) references meal(meal_id) on delete cascade,
+    FOREIGN key(ingredient_id) references Ingredient(ingredient_id) on delete cascade
 );
 
 -- procedures for MealIngredient
@@ -174,7 +172,7 @@ delimiter //
 
     create procedure viewAllMealIngredients( meal_id_view int )
         BEGIN 
-            select ingredient.ingredient_id, ingredient_name, ingredient_type, ingredient_amount, ingredient_total_cost, unit from Ingredient inner join mealingredient on ingredient.ingredient_id = mealingredient.ingredient_id where mealingredient.meal_id = meal_id_view;
+            select /* ingredient.ingredient_id, ingredient_name, ingredient_type, ingredient_amount, ingredient_total_cost, unit */* from Ingredient inner join mealingredient on ingredient.ingredient_id = mealingredient.ingredient_id where mealingredient.meal_id = meal_id_view;
         end;
     //
 
@@ -182,7 +180,7 @@ delimiter //
                                         ingredient_id_insert int,
                                         ingredient_amount int )
         BEGIN
-            insert into mealingredient values (null, meal_id, ingredient_id_insert, ingredient_amount, (select cost from ingredient where ingredient_id = ingredient_id_insert) * ingredient_amount);
+            insert into mealingredient values (meal_id, ingredient_id_insert, ingredient_amount, (select cost from ingredient where ingredient_id = ingredient_id_insert) * ingredient_amount);
         end;
     //
 
@@ -215,3 +213,143 @@ call addMealIngredient(3,1,1);
 call addMealIngredient(2,1,2);
 
 /*** End of MealIngredient Connector Table ***/
+
+/*** Start of Menu Code ***/
+
+CREATE TABLE MENU(
+    menu_id int auto_increment,
+    week_no int,
+    PRIMARY KEY (menu_id)
+);
+
+
+--  menu procedures
+
+delimiter //
+
+drop procedure if exists viewAllMenu;
+drop procedure if exists viewMenuByID;
+drop procedure if exists addMenu;
+
+    create procedure viewAllMenu()
+        BEGIN
+            select * from Menu;
+        end;
+    //
+
+    create procedure viewMenuByID(menu_id_v int)
+        BEGIN
+            select * from Menu where menu_id = menu_id_v;
+        end;
+    //
+
+    create procedure addMenu(week_no int)
+        BEGIN
+            insert into Menu values (null, week_no);
+        end;
+    //
+
+delimiter ;
+
+-- create instances of menu
+call addMenu(WEEK(CURDATE()));
+
+/*** End of Menu Code ***/
+
+/*** Start of Menu_Avoid code ***/
+create table MenuAvoid(
+    menu_id int,
+    menu_index int,
+    foreign key (menu_id) references menu(menu_id) on delete cascade
+);
+
+-- procedures for menu_avoid
+drop procedure if exists viewMenuAvoids;
+drop procedure if exists addMenuAvoid;
+drop procedure if exists deleteMenuAvoid;
+
+delimiter //
+
+    create procedure viewAllMenuAvoids(menu_id_v int)
+        begin
+            select * from menuavoid inner join menu on menuavoid.menu_id = menu.menu_id;
+        end;
+    //
+
+    create procedure addMenuAvoid(menu_id int,
+                                  menu_index int)
+        begin
+            insert into menuavoid values(menu_id, menu_index);
+        end;
+    //
+
+    create procedure deleteMenuAvoid( menu_id_delete int)
+        begin
+            delete from menuavoid where menu_id = menu_id_delete;
+        end;
+    //
+
+
+delimiter ;
+
+-- create default instances of menuavoid
+call addMenuAvoid(1,2);
+
+/*** End of Menu_avoid code ***/
+
+/*** Start of MenuMeal Connector code ***/
+
+create table MENUMEAL (
+    menu_id int, -- the menu where this meal belongs to
+    meal_id int, -- the meal id of this connector
+    persons int, -- number of people that will eat
+    FOREIGN key(menu_id) references menu(menu_id) on delete cascade,
+    FOREIGN key(meal_id) references meal(meal_id) on delete cascade
+);
+
+-- procedures for menumeal
+drop procedure if exists viewMenuMeals;
+drop procedure if exists addMenuMeal;
+drop procedure if exists deleteMenuMeal;
+drop procedure if exists updateMenuMeal;
+
+delimiter //
+
+    create procedure viewMenuMeals(menu_id_v int)
+        BEGIN
+            select * from menumeal inner join meal on menumeal.meal_id = meal.meal_id where menu_id = menu_id_v;
+        end;
+    //
+
+    create procedure addMenuMeal(menu_id int,
+                                 meal_id int,
+                                 persons int)
+        BEGIN
+            insert into Menumeal values (menu_id, meal_id, persons);
+        end;
+    // 
+
+    create procedure deleteMenuMeal( menu_id_d int)
+        begin
+            delete from menumeal where menu_id = menu_id_d;
+        end;
+    //
+
+    create procedure updateMenuMeal(menu_id_u int,
+                                    meal_id_u int,
+                                    persons_u int)
+        begin  
+            update MenuMeal
+                set meal_id = meal_id_u,
+                    persons = persons_u
+            where menu_id = menu_id_u and meal_id = meal_id_u;
+        end;
+    //
+
+delimiter ;
+
+-- create instances of menumeal
+
+call addMenuMeal(1,1,4);
+
+/*** End of MenuMeal Connector code ***/
