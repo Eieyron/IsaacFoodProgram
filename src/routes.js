@@ -1,5 +1,6 @@
 const IndexController = require('./controllers/IndexController')
 const IngredientController = require('./controllers/IngredientController')
+const MealController = require('./controllers/MealController')
 
 module.exports = (app) => {
 
@@ -18,5 +19,26 @@ module.exports = (app) => {
     IngredientController.updateIngredient)
   app.delete('/delete-ingredient/:id',
     IngredientController.deleteIngredient)
+
+  // MEAL-RELATED
+  app.get('/view-meal/:meal_id',
+    MealController.viewMeal)
+  app.get('/view-meals',
+    MealController.viewAllMeals)
+  app.post('/add-meal',
+    MealController.addMeal)
+  app.put('/update-meal/:meal_id',
+    MealController.updateMeal)
+  app.delete('/delete-meal/:meal_id',
+    MealController.deleteMeal)
+  
+  app.get('/view-ingredients-of-meal',
+    MealController.viewIngredientsOfMeal)
+  app.post('/add-ingredient-of-meal/:meal_id',
+    MealController.addIngredientOfMeal)
+  app.put('/update-ingredient-of-meal/:meal_id',
+    MealController.updateIngredientOfMeal)
+  app.delete('/delete-ingredient-of-meal/:meal_id',
+    MealController.deleteIngredientOfMeal)
 
 }
