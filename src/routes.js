@@ -1,6 +1,7 @@
 const IndexController = require('./controllers/IndexController')
 const IngredientController = require('./controllers/IngredientController')
 const MealController = require('./controllers/MealController')
+const UserController = require('./controllers/UserController')
 
 module.exports = (app) => {
 
@@ -41,4 +42,7 @@ module.exports = (app) => {
   app.delete('/delete-ingredient-of-meal/:meal_id',
     MealController.deleteIngredientOfMeal)
 
+  // USER-RELATED
+  app.get('/users-listing',
+    UserController.usersListing)
 }
