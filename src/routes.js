@@ -9,15 +9,15 @@ module.exports = (app) => {
     IndexController.home)
 
   // INGREDIENT-RELATED
-  app.get('/view-ingredient/:id',
+  app.get('/view-ingredient/:ingredient_id',
     IngredientController.viewIngredient)
   app.get('/view-ingredients',
     IngredientController.viewAllIngredients)
   app.post('/add-ingredient',
     IngredientController.addIngredient)
-  app.put('/update-ingredient/:id',
+  app.put('/update-ingredient/:ingredient_id',
     IngredientController.updateIngredient)
-  app.delete('/delete-ingredient/:id',
+  app.delete('/delete-ingredient/:ingredient_id',
     IngredientController.deleteIngredient)
 
   // MEAL-RELATED
