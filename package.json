@@ -5,7 +5,7 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "nodemon src/app.js"
   },
   "author": "Aaron Magnaye, Joman Encinas, and Dominic Lapitan",
   "license": "MIT",
