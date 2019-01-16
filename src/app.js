@@ -44,5 +44,7 @@ app.use(function(err, req, res, next) {
   res.render('error')
 }) */
 
+require('./routes')(app)
+
 app.listen(config.port)
 console.log(`Server started on port ${ config.port }`)
