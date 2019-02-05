@@ -5,9 +5,9 @@ const mysql = require('mysql');
 // connection to database
 const connection = mysql.createConnection({
     host :'localhost',
-    user :'dom',
-    password :'Dom_1234',
-    database :'ifpms'
+    user :'dom',          // your SQL user
+    password :'Dom_1234', // your SQL password
+    database :'foodprogram'
 });
 
 // for checking database connection
@@ -18,5 +18,5 @@ connection.connect( (err) => {
       console.log('Error connecting to the database')
 });
 
-connection.query('USE ifpms')
+connection.query('USE foodprogram')
 module.exports = connection;
