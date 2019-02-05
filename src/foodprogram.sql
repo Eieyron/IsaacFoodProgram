@@ -13,7 +13,7 @@ CREATE TABLE ingredients (
 
 CREATE TABLE meals (
     meal_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    meal_name varchar(45) NOT NULL,
+    meal_name varchar(256) NOT NULL,
     meal_type varchar(45) NOT NULL,
     meal_time varchar(45) NOT NULL,
     recipe TEXT NOT NULL
