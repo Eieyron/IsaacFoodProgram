@@ -10,7 +10,7 @@ module.exports = (app) => {
     IndexController.home)
 
   // INGREDIENT-RELATED
-  app.get('/view-ingredient/:ingredient_id',
+  app.get('/view-ingredient/:ingredient_name',
     IngredientController.viewIngredient)
   app.get('/view-ingredients',
     IngredientController.viewAllIngredients)
@@ -21,6 +21,7 @@ module.exports = (app) => {
   app.delete('/delete-ingredient/:ingredient_id',
     IngredientController.deleteIngredient)
 
+  /*
   // MEAL-RELATED
   app.get('/view-meal/:meal_id',
     MealController.viewMeal)
@@ -42,7 +43,5 @@ module.exports = (app) => {
   app.delete('/delete-ingredient-of-meal/:meal_id',
     MealController.deleteIngredientOfMeal)
 
-  // USER-RELATED
-  app.get('/users-listing',
-    UserController.usersListing)
+  */
 }

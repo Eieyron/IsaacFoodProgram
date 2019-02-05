@@ -7,7 +7,7 @@ const connection = mysql.createConnection({
     host :'localhost',
     user :'dom',
     password :'Dom_1234',
-    database :'ifpms'
+    database :'foodprogram'
 });
 
 // for checking database connection
@@ -18,5 +18,5 @@ connection.connect( (err) => {
       console.log('Error connecting to the database')
 });
 
-connection.query('USE ifpms')
+connection.query('USE foodprogram')
 module.exports = connection;
