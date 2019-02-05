@@ -3,5 +3,6 @@
 For Development:
 
 1. npm install
-2. change the config of database in src/database.js
-3. npm start
+2. for now, run src/foodprogram.sql inside MySQL
+3. change the config of database in src/database.js
+4. npm start
