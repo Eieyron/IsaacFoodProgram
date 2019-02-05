@@ -11,6 +11,16 @@ CREATE TABLE ingredients (
   unit varchar(45) NOT NULL
 );
 
+INSERT INTO ingredients (ingredient_name, ingredient_type, cost, unit)
+VALUES
+('Pepper', 'misc', 1.00, '1 pack'),
+('Tomato', 'fruit', 5.00, '1 pc'),
+('Ginger', 'misc', 5.00, '1 pc'),
+('Giniling', 'meat', 145.00, '1 kilo'),
+('Bread', 'misc', 60.00, '1 pack');
+
+
+
 CREATE TABLE meals (
     meal_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     meal_name varchar(256) NOT NULL,
